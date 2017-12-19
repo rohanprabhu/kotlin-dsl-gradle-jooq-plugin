@@ -5,7 +5,7 @@ plugins {
 }
 
 group = "com.rohanprabhu"
-version = "1.0"
+version = "0.1"
 
 gradlePlugin {
     (plugins) {
