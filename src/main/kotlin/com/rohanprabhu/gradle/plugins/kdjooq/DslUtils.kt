@@ -3,13 +3,15 @@ package com.rohanprabhu.gradle.plugins.kdjooq
 import org.jooq.util.jaxb.*
 import org.jooq.util.jaxb.Target
 
-class ListOps<T>(
-    list : List<T>,
-    private val internalList: MutableList<T> = list.toMutableList()
+class ForcedTypesListOps(
+    list : List<ForcedType>,
+    private val internalList: MutableList<ForcedType> = list.toMutableList()
 ) {
-    operator fun T.unaryPlus() = internalList.add(this)
+    fun forcedType(configure: (ForcedType) -> Unit) : Unit = ForcedType().apply(configure).let {
+        internalList.add(it)
+    }
 
-    fun getList() =
+    internal fun getList() =
         internalList.toList()
 }
 
@@ -44,8 +46,8 @@ fun catalog(configure: Catalog.() -> Unit) : Catalog = Catalog().apply(configure
 
 fun forcedTypes(vararg forcedType: ForcedType) = forcedType.toList()
 
-fun forcedTypes(configure: ListOps<ForcedType>.() -> Unit) : List<ForcedType> =
-    ListOps<ForcedType>(emptyList()).apply(configure).getList()
+fun forcedTypes(configure: ForcedTypesListOps.() -> Unit) : List<ForcedType> =
+    ForcedTypesListOps(emptyList()).apply(configure).getList()
 
 operator fun Jdbc?.invoke(configure: Jdbc.() -> Unit) : Jdbc = (this ?: Jdbc()).apply(configure)
 operator fun Generator?.invoke(configure: Generator.() -> Unit) : Generator = (this ?: Generator()).apply(configure)
@@ -56,7 +58,7 @@ operator fun EnumType?.invoke(configure: EnumType.() -> Unit) : EnumType = (this
 operator fun Property?.invoke(configure: Property.() -> Unit) : Property = (this ?: Property()).apply(configure)
 operator fun Schema?.invoke(configure: Schema.() -> Unit) : Schema = (this ?: Schema()).apply(configure)
 operator fun Catalog?.invoke(configure: Catalog.() -> Unit) : Catalog = (this ?: Catalog()).apply(configure)
-operator fun List<ForcedType>?.invoke(configure: ListOps<ForcedType>.() -> Unit) : List<ForcedType> =
-    ListOps((this ?: emptyList())).apply(configure).getList()
+operator fun List<ForcedType>?.invoke(configure: ForcedTypesListOps.() -> Unit) : List<ForcedType> =
+    ForcedTypesListOps((this ?: emptyList())).apply(configure).getList()
 operator fun JooqCodeGenerationTask.invoke(configure: JooqCodeGenerationTask.() -> Unit) : JooqCodeGenerationTask =
     this.apply(configure)

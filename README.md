@@ -6,6 +6,8 @@ A plugin that closely mirrors the de-facto (but non-official) [gradle plugin for
 
 **License** Apache 2.0 (https://www.apache.org/licenses/LICENSE-2.0)
 
+**Latest Version** 0.3
+
 ## What it provides
 
 1. Configure jooq code generation against a target database.
@@ -20,7 +22,7 @@ Similar to the gradle plugin, you can specify multiple jooq configurations and t
 To apply the plugin, use the gradle plugin syntax:
 
     plugins {
-        id("com.rohanprabhu.kotlin-dsl-jooq") version "0.2"
+        id("com.rohanprabhu.kotlin-dsl-jooq") version "0.3"
     }
 
 Once the plugin is applied, the minimum configuration required to generate sources are:
@@ -156,14 +158,14 @@ but keeping in lines with the kotlin-dsl and the overall gradle convention (also
         // other database parameters here
 
         forcedTypes {
-            +forcedType {
+            forcedType {
                 userType = "com.fasterxml.jackson.databind.JsonNode"
                 expression = ".*"
                 binding = "com.example.PostgreJSONGsonBinding"
                 types = "JSONB?"
             }
 
-            +forcedType {
+            forcedType {
                 name = "varchar"
                 expression = ".*"
                 types = "INET"
@@ -206,13 +208,20 @@ The tasks that are mapped are automatically set as dependencies for the `compile
 In addition to this, if you are using a migration tool like **flyway**, you'd want the generator to run anytime your migration directory has changed. To do so, you can:
 
     configuration("primary", project.java.sourceSets.main()) {
-        databaseSources = listOf(File(project.projectDir, "src/main/resources/com/example/migrations"))
+        databaseSources {
+            + "${project.projectDir}/src/main/resources/com/example/migrations"
+            + "${project.projectDir}/src/main/resources/schema.sql"
+        }
 
         configuration = jooqCodegenConfiguration {
             ...
         }
         ..
     }
+
+Any object can be specified after the `+` symbol, and the path is resovled by gradle depending on the type, as [documented here](https://docs.gradle.org/current/javadoc/org/gradle/api/Project.html#file-java.lang.Object-). You can also directly specify the list if you wish (if it is being constructed elsewhere or through a procedure):
+
+    databaseSources = listOf( ... ) // Any list of type List<Any>
 
 What you'd also like to do is make your migration task a dependency of the code generation task:
 

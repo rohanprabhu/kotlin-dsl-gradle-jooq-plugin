@@ -30,7 +30,7 @@ open class JooqCodeGenerationTask : DefaultTask() {
     var execResultHandler : Action<in ExecResult>? = null
 
     @get:Input
-    lateinit var databaseSourceLocations : List<File>
+    lateinit var databaseSourceLocations : List<Any>
 
     @TaskAction
     fun generateSources() {

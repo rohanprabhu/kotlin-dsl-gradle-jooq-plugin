@@ -8,10 +8,22 @@ class JooqConfiguration(
     val configName: String,
     val sourceSet: SourceSet
 ) {
-    var databaseSources : List<File> = emptyList()
+    class DatabaseSourcesOps {
+        private val internalList = mutableListOf<Any>()
+
+        operator fun Any.unaryPlus() = internalList.add(this)
+
+        internal fun getList() = internalList.toList()
+    }
+
+    var databaseSources : List<Any> = emptyList()
 
     val taskName = "jooq-codegen-$configName"
     lateinit var configuration: Configuration
+
+    fun databaseSources(configure: DatabaseSourcesOps.() -> Unit) {
+        databaseSources = DatabaseSourcesOps().apply(configure).getList()
+    }
 
     override fun toString(): String {
         return "JooqConfiguration(configuration=$configuration, sourceSet=$sourceSet)"
