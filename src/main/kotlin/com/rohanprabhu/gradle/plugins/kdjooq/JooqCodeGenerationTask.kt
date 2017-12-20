@@ -5,6 +5,7 @@ import org.gradle.api.Action
 import org.gradle.api.DefaultTask
 import org.gradle.api.file.FileCollection
 import org.gradle.api.tasks.*
+import org.gradle.process.ExecResult
 import org.gradle.process.JavaExecSpec
 import org.jooq.Constants
 import org.jooq.util.GenerationTool
@@ -15,21 +16,38 @@ import javax.xml.bind.JAXBContext
 import javax.xml.validation.SchemaFactory
 
 open class JooqCodeGenerationTask : DefaultTask() {
+    @Internal
     lateinit var jooqConfiguration : JooqConfiguration
 
     @Classpath
     @InputFiles
     lateinit var taskClasspath : FileCollection
 
+    @Internal
+    var javaExecAction: Action<in JavaExecSpec>? = null
+
+    @Internal
+    var execResultHandler : Action<in ExecResult>? = null
+
+    @get:Input
+    lateinit var databaseSourceLocations : List<File>
+
     @TaskAction
     fun generateSources() {
         val configFile = File(project.buildDir, "tmp/jooq/config-${jooqConfiguration.configName}.xml")
         writeConfigFile(configFile)
-        executeJooq(configFile)
+        val execResult = executeJooq(configFile)
+
+        execResultHandler?.execute(execResult)
+    }
+
+    fun configureAdditionalInputs() {
+        databaseSourceLocations = jooqConfiguration.databaseSources
+        jooqConfiguration.databaseSources.forEach { inputs.dir(it) }
     }
 
     @Input
-    fun getConfigHash() : Int = Objects.deepHashCode(jooqConfiguration)
+    fun getConfigHash() : Int = Objects.deepHashCode(jooqConfiguration.configuration)
 
     @OutputDirectory
     fun getOutputDirectory() : File =
@@ -47,13 +65,14 @@ open class JooqCodeGenerationTask : DefaultTask() {
         marshaller.marshal(jooqConfiguration.configuration, file)
     }
 
-    private fun executeJooq(file: File) {
+    private fun executeJooq(file: File) : ExecResult =
         project.javaexec(object : Action<JavaExecSpec> {
             override fun execute(t: JavaExecSpec) {
                 t.main = "org.jooq.util.GenerationTool"
                 t.classpath = taskClasspath
                 t.args = listOf(file.absolutePath)
+
+                javaExecAction?.execute(t)
             }
         })
-    }
 }

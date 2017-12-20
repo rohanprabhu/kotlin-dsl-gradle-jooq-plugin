@@ -2,11 +2,14 @@ package com.rohanprabhu.gradle.plugins.kdjooq
 
 import org.gradle.api.tasks.SourceSet
 import org.jooq.util.jaxb.Configuration
+import java.io.File
 
 class JooqConfiguration(
     val configName: String,
     val sourceSet: SourceSet
 ) {
+    var databaseSources : List<File> = emptyList()
+
     val taskName = "jooq-codegen-$configName"
     lateinit var configuration: Configuration
 

@@ -25,15 +25,17 @@ open class KotlinDslJooqPluginExtension(
     fun configuration(name: String, sourceSet: SourceSet, configure: JooqConfiguration.() -> Unit) {
         val configuration = JooqConfiguration(name, sourceSet).apply(configure)
 
-        project.tasks.create(configuration.taskName, JooqCodeGenerationTask::class.java).apply {
+        val task = project.tasks.create(configuration.taskName, JooqCodeGenerationTask::class.java).apply {
             description = "Generate jooq sources for config $name"
             group = "jooq-codegen"
             jooqConfiguration = configuration
             taskClasspath = jooqGeneratorRuntime
-        }.let {
-            cleanGeneratedSources(project, it)
+        }.apply {
+            cleanGeneratedSources(project, this)
             configureSourceSet(project, configuration)
         }
+
+        task.configureAdditionalInputs()
     }
 }
 
@@ -111,4 +113,5 @@ private fun configureSourceSet(project: Project, jooqConfiguration: JooqConfigur
 
     sourceSet.java.srcDir(jooqConfiguration.configuration.generator.target.directory)
     project.tasks.getByName(sourceSet.compileJavaTaskName).dependsOn(jooqConfiguration.taskName)
+    project.tasks.findByName("compileKotlin")?.dependsOn(jooqConfiguration.taskName)
 }

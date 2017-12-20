@@ -16,12 +16,12 @@ plugins {
 }
 
 group = "com.rohanprabhu"
-version = "0.1"
+version = "0.2"
 
 gradlePlugin {
     (plugins) {
         "kotlinDslJooqPlugin" {
-            id = "kotlin-dsl-jooq"
+            id = "com.rohanprabhu.kotlin-dsl-jooq"
             implementationClass = "com.rohanprabhu.gradle.plugins.kdjooq.KotlinDslJooqPlugin"
         }
     }
