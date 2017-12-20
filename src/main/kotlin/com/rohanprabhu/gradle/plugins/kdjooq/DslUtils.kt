@@ -58,3 +58,5 @@ operator fun Schema?.invoke(configure: Schema.() -> Unit) : Schema = (this ?: Sc
 operator fun Catalog?.invoke(configure: Catalog.() -> Unit) : Catalog = (this ?: Catalog()).apply(configure)
 operator fun List<ForcedType>?.invoke(configure: ListOps<ForcedType>.() -> Unit) : List<ForcedType> =
     ListOps((this ?: emptyList())).apply(configure).getList()
+operator fun JooqCodeGenerationTask.invoke(configure: JooqCodeGenerationTask.() -> Unit) : JooqCodeGenerationTask =
+    this.apply(configure)
