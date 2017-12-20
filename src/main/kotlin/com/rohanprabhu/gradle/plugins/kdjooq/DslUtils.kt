@@ -7,7 +7,7 @@ class ForcedTypesListOps(
     list : List<ForcedType>,
     private val internalList: MutableList<ForcedType> = list.toMutableList()
 ) {
-    fun forcedType(configure: (ForcedType) -> Unit) : Unit = ForcedType().apply(configure).let {
+    fun forcedType(configure: ForcedType.() -> Unit) : Unit = ForcedType().apply(configure).let {
         internalList.add(it)
     }
 

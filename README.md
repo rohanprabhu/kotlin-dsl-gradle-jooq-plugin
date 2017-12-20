@@ -6,7 +6,7 @@ A plugin that closely mirrors the de-facto (but non-official) [gradle plugin for
 
 **License** Apache 2.0 (https://www.apache.org/licenses/LICENSE-2.0)
 
-**Latest Version** 0.3
+**Latest Version** 0.3.1
 
 ## What it provides
 
@@ -22,7 +22,7 @@ Similar to the gradle plugin, you can specify multiple jooq configurations and t
 To apply the plugin, use the gradle plugin syntax:
 
     plugins {
-        id("com.rohanprabhu.kotlin-dsl-jooq") version "0.3"
+        id("com.rohanprabhu.kotlin-dsl-jooq") version "0.3.1"
     }
 
 Once the plugin is applied, the minimum configuration required to generate sources are:
