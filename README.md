@@ -3,6 +3,7 @@
 A plugin that closely mirrors the de-facto (but non-official) [gradle plugin for jOOQ](https://github.com/etiennestuder/gradle-jooq-plugin)  by *etiennestuder*. While the gradle plugin can be used while using kotlin-dsl it can get very difficult to use it because it employs the dynamic method mechanism of groovy, which the kotlin runtime cannot use to figure out the types and most of the types have to be annotated by the developer. This plugins a couple of extra features that some use cases might require.
 
 **Author** Rohan Prabhu (rohan@rohanprabhu.com)
+
 **License** Apache 2.0 (https://www.apache.org/licenses/LICENSE-2.0)
 
 ## What it provides
