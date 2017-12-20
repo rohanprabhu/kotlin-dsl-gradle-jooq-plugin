@@ -66,13 +66,11 @@ open class JooqCodeGenerationTask : DefaultTask() {
     }
 
     private fun executeJooq(file: File) : ExecResult =
-        project.javaexec(object : Action<JavaExecSpec> {
-            override fun execute(t: JavaExecSpec) {
-                t.main = "org.jooq.util.GenerationTool"
-                t.classpath = taskClasspath
-                t.args = listOf(file.absolutePath)
+        project.javaexec {
+            main = "org.jooq.util.GenerationTool"
+            classpath = taskClasspath
+            args = listOf(file.absolutePath)
 
-                javaExecAction?.execute(t)
-            }
-        })
+            javaExecAction?.execute(this)
+        }
 }

@@ -1,11 +1,9 @@
 package com.rohanprabhu.gradle.plugins.kdjooq
 
-import org.gradle.api.Action
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.Task
 import org.gradle.api.artifacts.Configuration
-import org.gradle.api.artifacts.DependencyResolveDetails
 import org.gradle.api.logging.Logging
 import org.gradle.api.plugins.BasePlugin
 import org.gradle.api.plugins.JavaBasePlugin
@@ -47,7 +45,7 @@ class KotlinDslJooqPlugin : Plugin<Project> {
     companion object {
         private val log = Logging.getLogger(KotlinDslJooqPlugin::class.java)
 
-        const val ExtensionName = "jooqBuildPhase"
+        const val ExtensionName = "jooqGenerator"
         const val BuildPhaseGradleConfigurationName = "jooqGeneratorRuntime"
     }
 
@@ -87,17 +85,13 @@ class KotlinDslJooqPlugin : Plugin<Project> {
         val groupIds = JooqEdition.values().map { it.editionArtifactGroup }.toSet()
 
         project.configurations.all {
-            resolutionStrategy.eachDependency(object : Action<DependencyResolveDetails> {
-                override fun execute(t: DependencyResolveDetails) {
-                    val requested = t.requested
-
-                    if (groupIds.contains(requested.group) && requested.name.startsWith("jooq")) {
-                        t.useTarget(
-                            "${extension.jooqEdition.editionArtifactGroup}:${requested.name}:${extension.jooqVersion}"
-                        )
-                    }
+            resolutionStrategy.eachDependency {
+                if (groupIds.contains(requested.group) && requested.name.startsWith("jooq")) {
+                    this.useTarget(
+                        "${extension.jooqEdition.editionArtifactGroup}:${requested.name}:${extension.jooqVersion}"
+                    )
                 }
-            })
+            }
         }
     }
 }
