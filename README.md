@@ -246,7 +246,7 @@ When the generator runs, it uses a java execution spec that is provided by the g
         }
     }
 
-Do not forget to use the correct type annotation here (`JooqCodeGenerationTask`), otherwise it'd just resolve to `gradle.api.tasks.Task` and you will get an error.
+Do not forget to use the correct type annotation here (`JooqCodeGenerationTask`), otherwise it'll just resolve to `gradle.api.tasks.Task` and you will get an error, something along the lines of `javaExecAction` and `execResultHandler` not being resolved.
 
 ### Contact
 
