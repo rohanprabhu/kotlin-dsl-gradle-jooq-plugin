@@ -11,7 +11,7 @@ A plugin that closely mirrors the de-facto (but non-official) [gradle plugin for
 ## What it provides
 
 1. Configure jooq code generation against a target database.
-2. Task dependency management, specifically it's dependencies on `compileJava` and `compileKotlin`. As opposed to the gradle plugin, this plugin also configures the dependencies for the `compileKotlin` task.
+2. Task dependency management, specifically its dependencies on `compileJava` and `compileKotlin`. As opposed to the gradle plugin, this plugin also configures the dependencies for the `compileKotlin` task.
 3. Lock version of jooq throughout the project in all configurations.
 4. Specify additional source directories which could be treated as an input for the code generation task (this is useful when you are using database migrations).
 
@@ -48,7 +48,7 @@ Once the plugin is applied, the minimum configuration required to generate sourc
         }
     }
 
-The code generator is run in a classpath of it's own, which is specified using `jooqGeneratorRuntime`. So add your JDBC dependencies (like JDBC drivers) in the `jooqGeneratorRuntime` configuration in the `dependencies` block:
+The code generator is run in a classpath of its own, which is specified using `jooqGeneratorRuntime`. So add your JDBC dependencies (like JDBC drivers) in the `jooqGeneratorRuntime` configuration in the `dependencies` block:
 
     dependencies {
         jooqGeneratorRuntime("org.postgresql:postgresql:42.1")
@@ -141,7 +141,7 @@ Once this is specified, any jooq dependency across configurations does not need 
         compile("org.jooq:jooq")
     }
 
-This will automatically pick-up the version you have specified in the configuration. Do note that there is currently no way to disable this automatic version locking. Also, the name `jooqGenerator` is a bit misleading to it's alternative action of locking a version number throughout the code base. I intend to rename it in the next version.
+This will automatically pick-up the version you have specified in the configuration. Do note that there is currently no way to disable this automatic version locking. Also, the name `jooqGenerator` is a bit misleading to its alternative action of locking a version number throughout the code base. I intend to rename it in the next version.
 
 ## Using forced types
 
