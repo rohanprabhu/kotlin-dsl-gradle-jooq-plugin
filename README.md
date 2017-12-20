@@ -46,7 +46,7 @@ Once the plugin is applied, the minimum configuration required to generate sourc
         }
     }
 
-The code generator is run in a classpath of it's own, which is specified using `jooqGeneratorRuntime`. So add your JDBC dependencies (like JDBC drivers) in the `jooqRuntime` block:
+The code generator is run in a classpath of it's own, which is specified using `jooqGeneratorRuntime`. So add your JDBC dependencies (like JDBC drivers) in the `jooqGeneratorRuntime` configuration in the `dependencies` block:
 
     dependencies {
         jooqGeneratorRuntime("org.postgresql:postgresql:42.1")
@@ -95,7 +95,7 @@ Since the `configuration` is simply the `Configuration` from `org.jooq.util.jaxb
         }
     }
 
-The first example uses the DSL convinience utilities that are provided as part of this plugin and they essentially create the jaxb package components for you. If you want to re-use certain objects, you can also use:
+The first example uses the DSL convenience utilities that are provided as part of this plugin and they essentially create the jaxb package components for you. If you want to re-use certain objects, you can also use:
 
     val commonJdbc = jdbc {
          username = "rohan"
@@ -171,7 +171,7 @@ but keeping in lines with the kotlin-dsl and the overall gradle convention (also
         }
     }
 
-**NOTE** Since `CustomType` directive is now deprecated in jooq, no conviniece functions are provided for the same, but you can still use it if you wish using:
+**NOTE** Since `CustomType` directive is now deprecated in jooq, no convenience functions are provided for the same, but you can still use it if you wish using:
 
     database {
         customTypes = listOf(... construct your list here ...)
