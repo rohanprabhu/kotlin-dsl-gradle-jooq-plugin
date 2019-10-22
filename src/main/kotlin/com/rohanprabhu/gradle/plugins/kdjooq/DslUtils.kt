@@ -21,33 +21,46 @@ fun jooqCodegenConfiguration(
 ) : Configuration =
     Configuration().apply(configure)
 
-fun jdbc(configure: Jdbc.() -> Unit) : Jdbc = Jdbc().apply(configure)
+fun Configuration.jdbc(configure: Jdbc.() -> Unit) : Jdbc = Jdbc().apply(configure).also { this.jdbc = it }
 
-fun generator(configure: Generator.() -> Unit) : Generator = Generator().apply(configure)
+fun Configuration.generator(configure: Generator.() -> Unit) : Generator =
+        Generator().apply(configure).also { this.generator = it }
 
-fun target(configure: Target.() -> Unit) : Target = Target().apply(configure)
+fun Generator.target(configure: Target.() -> Unit) : Target = Target().apply(configure).also { this.target = it }
 
-fun database(configure: Database.() -> Unit) : Database = Database().apply(configure)
+fun Generator.database(configure: Database.() -> Unit) : Database =
+        Database().apply(configure).also { this.database = it}
 
-fun strategy(configure: Strategy.() -> Unit) : Strategy = Strategy().apply(configure)
+fun Generator.strategy(configure: Strategy.() -> Unit) : Strategy = Strategy().apply(configure).also {
+    this.strategy = it
+}
 
-fun generate(configure: Generate.() -> Unit) : Generate = Generate().apply(configure)
+fun Generator.generate(configure: Generate.() -> Unit) : Generate = Generate().apply(configure).also {
+    this.generate = it
+}
 
-fun forcedType(configure: ForcedType.() -> Unit) : ForcedType = ForcedType().apply(configure)
+fun MutableList<ForcedType>.forcedType(configure: ForcedType.() -> Unit) : ForcedType =
+        ForcedType().apply(configure).also {
+            this.add(it)
+        }
 
-fun enumType(configure: EnumType.() -> Unit) : EnumType = EnumType().apply(configure)
+fun Configuration.enumType(configure: EnumType.() -> Unit) : EnumType = EnumType().apply(configure)
 
-fun dbProperty(configure: Property.() -> Unit) : Property = Property().apply(configure)
+fun Configuration.dbProperty(configure: Property.() -> Unit) : Property = Property().apply(configure)
 
-fun dbProperty(key: String, value: String) = Property().apply { this.key = key; this.value = value }
+fun Jdbc.dbProperty(key: String, value: String) = Property().apply { this.key = key; this.value = value }
 
-fun schema(configure: Schema.() -> Unit) : Schema = Schema().apply(configure)
+fun Database.schema(configure: Schema.() -> Unit) : Schema = Schema().apply(configure).also {
+    this.schema = it
+}
 
-fun catalog(configure: Catalog.() -> Unit) : Catalog = Catalog().apply(configure)
+fun Configuration.catalog(configure: Catalog.() -> Unit) : Catalog = Catalog().apply(configure)
 
-fun forcedTypes(vararg forcedType: ForcedType) = forcedType.toList()
+fun Database.forcedTypes(vararg forcedType: ForcedType) = forcedType.toMutableList().also {
+    this.forcedTypes = it
+}
 
-fun forcedTypes(configure: ForcedTypesListOps.() -> Unit) : List<ForcedType> =
+fun Configuration.forcedTypes(configure: ForcedTypesListOps.() -> Unit) : List<ForcedType> =
     ForcedTypesListOps(emptyList()).apply(configure).getList()
 
 operator fun Jdbc?.invoke(configure: Jdbc.() -> Unit) : Jdbc = (this ?: Jdbc()).apply(configure)
