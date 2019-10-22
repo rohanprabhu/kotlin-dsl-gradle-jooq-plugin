@@ -14,7 +14,7 @@ open class KotlinDslJooqPluginExtension(
     private val jooqGeneratorRuntime: Configuration
 ) {
     companion object {
-        const val DefaultJooqVersion = "3.10.1"
+        const val DefaultJooqVersion = "3.12.1"
     }
 
     var jooqEdition : JooqEdition = JooqEdition.OpenSource

@@ -1,8 +1,7 @@
 package com.rohanprabhu.gradle.plugins.kdjooq
 
 import org.gradle.api.tasks.SourceSet
-import org.jooq.util.jaxb.Configuration
-import java.io.File
+import org.jooq.meta.jaxb.Configuration
 
 class JooqConfiguration(
     val configName: String,

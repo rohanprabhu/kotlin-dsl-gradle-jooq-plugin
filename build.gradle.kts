@@ -20,7 +20,7 @@ version = "0.3.1"
 
 gradlePlugin {
     (plugins) {
-        "kotlinDslJooqPlugin" {
+        register("kotlinDslJooqPlugin") {
             id = "com.rohanprabhu.kotlin-dsl-jooq"
             implementationClass = "com.rohanprabhu.gradle.plugins.kdjooq.KotlinDslJooqPlugin"
         }
@@ -34,14 +34,14 @@ pluginBundle {
     tags = listOf("jooq", "kotlin-dsl")
 
     (plugins) {
-        "kotlinDslJooqPlugin" {
+        register("kotlinDslJooqPlugin") {
             id = "com.rohanprabhu.kotlin-dsl-jooq"
             displayName = "jOOQ plugin for Kotlin DSL"
         }
     }
 }
 
-val jooqVersion by project
+val jooqVersion: String by project
 
 repositories {
     mavenCentral()

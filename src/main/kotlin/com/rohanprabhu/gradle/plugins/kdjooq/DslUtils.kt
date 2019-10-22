@@ -1,11 +1,12 @@
 package com.rohanprabhu.gradle.plugins.kdjooq
 
-import org.jooq.util.jaxb.*
-import org.jooq.util.jaxb.Target
+import org.jooq.meta.jaxb.*
+import org.jooq.meta.jaxb.Target
+import org.jooq.util.xml.jaxb.*
 
 class ForcedTypesListOps(
-    list : List<ForcedType>,
-    private val internalList: MutableList<ForcedType> = list.toMutableList()
+        list : List<ForcedType>,
+        private val internalList: MutableList<ForcedType> = list.toMutableList()
 ) {
     fun forcedType(configure: ForcedType.() -> Unit) : Unit = ForcedType().apply(configure).let {
         internalList.add(it)
@@ -16,9 +17,9 @@ class ForcedTypesListOps(
 }
 
 fun jooqCodegenConfiguration(
-    configure: org.jooq.util.jaxb.Configuration.() -> Unit
-) : org.jooq.util.jaxb.Configuration =
-    org.jooq.util.jaxb.Configuration().apply(configure)
+    configure: Configuration.() -> Unit
+) : Configuration =
+    Configuration().apply(configure)
 
 fun jdbc(configure: Jdbc.() -> Unit) : Jdbc = Jdbc().apply(configure)
 

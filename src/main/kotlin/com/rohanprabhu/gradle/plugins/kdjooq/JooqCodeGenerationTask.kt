@@ -8,8 +8,8 @@ import org.gradle.api.tasks.*
 import org.gradle.process.ExecResult
 import org.gradle.process.JavaExecSpec
 import org.jooq.Constants
-import org.jooq.util.GenerationTool
-import org.jooq.util.jaxb.Configuration
+import org.jooq.codegen.GenerationTool
+import org.jooq.meta.jaxb.Configuration
 import java.io.File
 import javax.xml.XMLConstants
 import javax.xml.bind.JAXBContext
