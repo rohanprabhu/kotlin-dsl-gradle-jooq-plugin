@@ -53,6 +53,11 @@ dependencies {
     compile("org.jooq:jooq:$jooqVersion")
     compile("org.jooq:jooq-meta:$jooqVersion")
     compile("org.jooq:jooq-codegen:$jooqVersion")
+    compile("javax.activation:activation:1.1.1")
+    compile("javax.xml.bind:jaxb-api:2.3.0")
+    compile("com.sun.xml.bind:jaxb-core:2.3.0.1")
+
+    runtime("com.sun.xml.bind:jaxb-impl:2.3.0.1")
 }
 
 publishing {

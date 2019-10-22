@@ -24,7 +24,10 @@ fun jooqCodegenConfiguration(
 fun Configuration.jdbc(configure: Jdbc.() -> Unit) : Jdbc = Jdbc().apply(configure).also { this.jdbc = it }
 
 fun Configuration.generator(configure: Generator.() -> Unit) : Generator =
-        Generator().apply(configure).also { this.generator = it }
+        Generator().apply(configure).also {
+            it.database = Database()
+            this.generator = it
+        }
 
 fun Generator.target(configure: Target.() -> Unit) : Target = Target().apply(configure).also { this.target = it }
 
@@ -50,9 +53,11 @@ fun Configuration.dbProperty(configure: Property.() -> Unit) : Property = Proper
 
 fun Jdbc.dbProperty(key: String, value: String) = Property().apply { this.key = key; this.value = value }
 
+/*
 fun Database.schema(configure: Schema.() -> Unit) : Schema = Schema().apply(configure).also {
     this.schema = it
 }
+ */
 
 fun Configuration.catalog(configure: Catalog.() -> Unit) : Catalog = Catalog().apply(configure)
 

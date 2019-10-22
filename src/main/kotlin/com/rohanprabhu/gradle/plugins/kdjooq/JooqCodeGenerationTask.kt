@@ -67,6 +67,7 @@ open class JooqCodeGenerationTask : DefaultTask() {
 
     private fun executeJooq(file: File) : ExecResult =
         project.javaexec {
+            println(taskClasspath.files.map { it.name })
             main = GenerationTool::class.qualifiedName
             classpath = taskClasspath
             args = listOf(file.absolutePath)

@@ -8,7 +8,6 @@ import org.gradle.api.logging.Logging
 import org.gradle.api.plugins.BasePlugin
 import org.gradle.api.plugins.JavaBasePlugin
 import org.gradle.api.tasks.SourceSet
-import org.gradle.kotlin.dsl.add
 
 open class KotlinDslJooqPluginExtension(
     private val project: Project,
@@ -16,12 +15,6 @@ open class KotlinDslJooqPluginExtension(
 ) {
     companion object {
         const val DefaultJooqVersion = "3.12.1"
-        val CodegenBaseDeps = listOf(
-                "javax.activation:activation:1.1.1",
-                "javax.xml.bind:jaxb-api:2.3.0",
-                "com.sun.xml.bind:jaxb-core:2.3.0.1",
-                "com.sun.xml.bind:jaxb-impl:2.3.0.1"
-        )
     }
 
     var jooqEdition : JooqEdition = JooqEdition.OpenSource
@@ -34,11 +27,7 @@ open class KotlinDslJooqPluginExtension(
             description = "Generate jooq sources for config $name"
             group = "jooq-codegen"
             jooqConfiguration = configuration
-            taskClasspath = jooqGeneratorRuntime.also {
-                CodegenBaseDeps.forEach { baseDep ->
-                    project.dependencies.add(it.name, baseDep)
-                }
-            }
+            taskClasspath = jooqGeneratorRuntime
         }.apply {
             cleanGeneratedSources(project, this)
             configureSourceSet(project, configuration)
