@@ -16,11 +16,11 @@ plugins {
 }
 
 group = "com.rohanprabhu"
-version = "0.3.1"
+version = "0.4.0"
 
 gradlePlugin {
     (plugins) {
-        "kotlinDslJooqPlugin" {
+        register("kotlinDslJooqPlugin") {
             id = "com.rohanprabhu.kotlin-dsl-jooq"
             implementationClass = "com.rohanprabhu.gradle.plugins.kdjooq.KotlinDslJooqPlugin"
         }
@@ -34,14 +34,14 @@ pluginBundle {
     tags = listOf("jooq", "kotlin-dsl")
 
     (plugins) {
-        "kotlinDslJooqPlugin" {
+        register("kotlinDslJooqPlugin") {
             id = "com.rohanprabhu.kotlin-dsl-jooq"
             displayName = "jOOQ plugin for Kotlin DSL"
         }
     }
 }
 
-val jooqVersion by project
+val jooqVersion: String by project
 
 repositories {
     mavenCentral()
@@ -53,6 +53,11 @@ dependencies {
     compile("org.jooq:jooq:$jooqVersion")
     compile("org.jooq:jooq-meta:$jooqVersion")
     compile("org.jooq:jooq-codegen:$jooqVersion")
+    compile("javax.activation:activation:1.1.1")
+    compile("javax.xml.bind:jaxb-api:2.3.0")
+    compile("com.sun.xml.bind:jaxb-core:2.3.0.1")
+
+    runtime("com.sun.xml.bind:jaxb-impl:2.3.0.1")
 }
 
 publishing {

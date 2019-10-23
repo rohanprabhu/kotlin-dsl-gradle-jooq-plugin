@@ -6,7 +6,8 @@ A plugin that closely mirrors the de-facto (but non-official) [gradle plugin for
 
 **License** Apache 2.0 (https://www.apache.org/licenses/LICENSE-2.0)
 
-**Latest Version** 0.3.1
+**Latest Version** 0.4.0
+*Legacy Version* 0.3.1
 
 ## What it provides
 
@@ -22,8 +23,11 @@ Similar to the gradle plugin, you can specify multiple jooq configurations and t
 To apply the plugin, use the gradle plugin syntax:
 
     plugins {
-        id("com.rohanprabhu.kotlin-dsl-jooq") version "0.3.1"
+        id("com.rohanprabhu.kotlin-dsl-jooq") version "0.4.0"
     }
+
+If you want to use older versions of jOOQ (i.e. 3.10 and older) use plugin version "0.3.1". Do note that 0.3.1
+does not support Java 9 and requires a slightly different configuration syntax.
 
 Once the plugin is applied, the minimum configuration required to generate sources are:
 
@@ -35,7 +39,6 @@ Once the plugin is applied, the minimum configuration required to generate sourc
                     password = "password"
                     driver   = "org.postgresql.Driver"
                     url      = "jdbc:postgresql://localhost:5432/example_database"
-                    schema   = "public"
                 }
 
                 generator {
@@ -43,10 +46,28 @@ Once the plugin is applied, the minimum configuration required to generate sourc
                         packageName = "com.example.jooq"
                         directory   = "${project.buildDir}/generated/jooq/primary"
                     }
+                    
+                    database {
+                        name = "org.jooq.meta.postgres.PostgresDatabase"
+                        inputSchema = "public"
+                    }
                 }
             }
         }
     }
+    
+> If you are using the legacy version of this plugin, then you will need to assign these properties
+> inside the config, i.e.
+>
+>```
+> jooqGenerator {
+>    configuration("primary", project.java.sourceSets.getByName("main")) {
+>        configuration = jooqCodegenConfiguration {
+>            jdbc = jdbc { ...
+>```
+>
+> The last line in the new config does not require the assignment part `jdbc = ...`
+>
 
 The code generator is run in a classpath of its own, which is specified using `jooqGeneratorRuntime`. So add your JDBC dependencies (like JDBC drivers) in the `jooqGeneratorRuntime` configuration in the `dependencies` block:
 
@@ -97,9 +118,13 @@ Since the `configuration` is simply the `Configuration` from `org.jooq.util.jaxb
         }
     }
 
-The first example uses the DSL convenience utilities that are provided as part of this plugin and they essentially create the jaxb package components for you. If you want to re-use certain objects, you can also use:
+The first example uses the DSL convenience utilities that are provided as part of this plugin and they essentially
+create the jaxb package components for you and assign it to the configuration. From 0.4.0 onwards, if you want to
+re-use certain objects, most common properties have a mirror function with `Config` suffixed to it that can
+generate such an object for you. For example, to create a common jdbc config object, you can use
+the `jdbcConfig` function:
 
-    val commonJdbc = jdbc {
+    val commonJdbc = jdbcConfig {
          username = "rohan"
          password = "password"
     }
@@ -123,6 +148,8 @@ The first example uses the DSL convenience utilities that are provided as part o
             }
         }
     }
+
+> If you are using the legacy version, the function name is called `jdbc` itself.
 
 These methods are available for almost all types that are used by the `org.jooq.util.jaxb.Configuration` object.
 
