@@ -6,8 +6,7 @@ A plugin that closely mirrors the de-facto (but non-official) [gradle plugin for
 
 **License** Apache 2.0 (https://www.apache.org/licenses/LICENSE-2.0)
 
-**Latest Version** 0.4.1
-*Legacy Version* 0.3.1
+**Latest Version** 0.4.1 | *Legacy Version* 0.3.1
 
 ## What it provides
 
