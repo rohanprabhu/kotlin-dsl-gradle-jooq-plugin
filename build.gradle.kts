@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
 buildscript {
     repositories {
         maven("https://plugins.gradle.org/m2/")
@@ -16,7 +18,7 @@ plugins {
 }
 
 group = "com.rohanprabhu"
-version = "0.4.1"
+version = "0.4.2"
 
 gradlePlugin {
     (plugins) {
@@ -42,6 +44,14 @@ pluginBundle {
 }
 
 val jooqVersion: String by project
+val compileKotlin: KotlinCompile by project
+
+compileKotlin.kotlinOptions.jvmTarget = "1.8"
+
+tasks.withType<JavaCompile> {
+    targetCompatibility = "1.8"
+    sourceCompatibility = "1.8"
+}
 
 repositories {
     mavenCentral()
