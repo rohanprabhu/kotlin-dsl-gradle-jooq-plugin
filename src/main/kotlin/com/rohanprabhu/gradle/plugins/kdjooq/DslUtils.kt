@@ -41,7 +41,7 @@ fun Jdbc.properties(configure: JdbcPropertiesOps.() -> Unit) = JdbcPropertiesOps
 fun generatorConfig(configure: Generator.() -> Unit) = Generator().apply(configure)
 fun Configuration.generator(configure: Generator.() -> Unit) {
     generatorConfig(configure).also {
-        it.database = Database()
+        it.database = it.database ?: Database()
         this.generator = it
     }
 }
