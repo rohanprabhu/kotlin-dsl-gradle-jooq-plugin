@@ -30,8 +30,10 @@ does not support Java 9 and requires a slightly different configuration syntax.
 
 Once the plugin is applied, the minimum configuration required to generate sources are:
 
+    import com.rohanprabhu.gradle.plugins.kdjooq.*
+
     jooqGenerator {
-        configuration("primary", project.java.sourceSets.getByName("main")) {
+        configuration("primary", sourceSets["main"]) {
             configuration = jooqCodegenConfiguration {
                 jdbc {
                     username = "rohan"
