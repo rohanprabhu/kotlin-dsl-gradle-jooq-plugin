@@ -33,7 +33,7 @@ Once the plugin is applied, the minimum configuration required to generate sourc
     import com.rohanprabhu.gradle.plugins.kdjooq.*
 
     jooqGenerator {
-        configuration("primary", sourceSets["main"]) {
+        configuration("primary", project.java.sourcesets.getByName("main")) {
             configuration = jooqCodegenConfiguration {
                 jdbc {
                     username = "rohan"
