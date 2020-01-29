@@ -19,6 +19,7 @@ open class KotlinDslJooqPluginExtension(
 
     var jooqEdition : JooqEdition = JooqEdition.OpenSource
     var jooqVersion : String = DefaultJooqVersion
+    var attachToCompileJava = true
 
     fun configuration(name: String, sourceSet: SourceSet, configure: JooqConfiguration.() -> Unit) {
         val configuration = JooqConfiguration(name, sourceSet).apply(configure)
@@ -30,7 +31,7 @@ open class KotlinDslJooqPluginExtension(
             taskClasspath = jooqGeneratorRuntime
         }.apply {
             cleanGeneratedSources(project, this)
-            configureSourceSet(project, configuration)
+            configureSourceSet(project, this@KotlinDslJooqPluginExtension, configuration)
         }
 
         task.configureAdditionalInputs()
@@ -102,10 +103,12 @@ private fun cleanGeneratedSources(project: Project, task: Task) {
     task.mustRunAfter(cleanJooqSourcesTaskName)
 }
 
-private fun configureSourceSet(project: Project, jooqConfiguration: JooqConfiguration) {
+private fun configureSourceSet(project: Project, extension: KotlinDslJooqPluginExtension, jooqConfiguration: JooqConfiguration) {
     val sourceSet = jooqConfiguration.sourceSet
 
     sourceSet.java.srcDir(jooqConfiguration.configuration.generator.target.directory)
-    project.tasks.getByName(sourceSet.compileJavaTaskName).dependsOn(jooqConfiguration.taskName)
-    project.tasks.findByName("compileKotlin")?.dependsOn(jooqConfiguration.taskName)
+    if (extension.attachToCompileJava) {
+        project.tasks.getByName(sourceSet.compileJavaTaskName).dependsOn(jooqConfiguration.taskName)
+        project.tasks.findByName("compileKotlin")?.dependsOn(jooqConfiguration.taskName)
+    }
 }
