@@ -258,6 +258,12 @@ What you'd also like to do is make your migration task a dependency of the code 
 
 Do remember to use the correct name of the task depending on the configuration name you have chosen.
 
+Optionally, if you want to run the task manually, you can disable this default behavior by setting the variable `attachToCompileJava` to false:
+
+    jooqGenerator {
+        attatchToCompileJava = false
+    }
+
 ## Configuring the generator JVM
 
 When the generator runs, it uses a java execution spec that is provided by the gradle infrastructure. If you wish to modify the way it runs, and/or add a handler to the post-execution result, you can:
