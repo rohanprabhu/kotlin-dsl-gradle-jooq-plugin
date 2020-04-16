@@ -30,7 +30,7 @@ open class KotlinDslJooqPluginExtension(
             jooqConfiguration = configuration
             taskClasspath = jooqGeneratorRuntime
         }.apply {
-            cleanGeneratedSources(project, this)
+            cleanGeneratedSources(project, this, this@KotlinDslJooqPluginExtension)
             configureSourceSet(project, this@KotlinDslJooqPluginExtension, configuration)
         }
 
@@ -97,9 +97,11 @@ class KotlinDslJooqPlugin : Plugin<Project> {
     }
 }
 
-private fun cleanGeneratedSources(project: Project, task: Task) {
+private fun cleanGeneratedSources(project: Project, task: Task, extension: KotlinDslJooqPluginExtension) {
     val cleanJooqSourcesTaskName = "clean" + task.name.capitalize()
-    project.tasks.getByName(BasePlugin.CLEAN_TASK_NAME).dependsOn(cleanJooqSourcesTaskName)
+    if (extension.attachToCompileJava) {
+        project.tasks.getByName(BasePlugin.CLEAN_TASK_NAME).dependsOn(cleanJooqSourcesTaskName)
+    }
     task.mustRunAfter(cleanJooqSourcesTaskName)
 }
 
