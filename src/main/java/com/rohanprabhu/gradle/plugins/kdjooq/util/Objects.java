@@ -20,7 +20,7 @@
  See the License for the specific language governing permissions and
  limitations under the License.
  */
-package nu.studer.gradle.util;
+package com.rohanprabhu.gradle.plugins.kdjooq.util;
 
 import groovy.lang.Closure;
 

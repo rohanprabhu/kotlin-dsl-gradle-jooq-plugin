@@ -1,6 +1,6 @@
 package com.rohanprabhu.gradle.plugins.kdjooq
 
-import nu.studer.gradle.util.Objects
+import com.rohanprabhu.gradle.plugins.kdjooq.util.Objects
 import org.gradle.api.Action
 import org.gradle.api.DefaultTask
 import org.gradle.api.file.FileCollection
