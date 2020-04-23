@@ -261,7 +261,7 @@ Do remember to use the correct name of the task depending on the configuration n
 Optionally, if you want to run the task manually, you can disable this default behavior by setting the variable `attachToCompileJava` to false:
 
     jooqGenerator {
-        attatchToCompileJava = false
+        attachToCompileJava = false
     }
 
 ## Configuring the generator JVM
