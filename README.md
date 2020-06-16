@@ -13,11 +13,11 @@ A plugin that closely mirrors the de-facto (but non-official) [gradle plugin for
 A huge thank you for the kind people submitting PRs and continuously improving this plugin (in no particular order).
 If you see yours or anybodys name missing, please submit a PR marking a change in this section.
 
-1. Nigel Gott @nigel-gott
-2. Aldo Borrerro @aldoborrero
-3. Ivan @devshift
-4. Anuraag Agrawal @anuraaga
-5. Davin Kevin @davinkevin
+1. Nigel Gott [@nigel-gott](https://github.com/nigel-gott)
+2. Aldo Borrerro [@aldoborrero](https://github.com/aldoborrero)
+3. Ivan [@devshift](https://github.com/devshift)
+4. Anuraag Agrawal [@anuraaga](https://github.com/anuraaga)
+5. Davin Kevin [@davinkevin](https://github.com/davinkevin)
 
 ## What it provides
 
