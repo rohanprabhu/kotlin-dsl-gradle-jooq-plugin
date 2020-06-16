@@ -6,7 +6,18 @@ A plugin that closely mirrors the de-facto (but non-official) [gradle plugin for
 
 **License** Apache 2.0 (https://www.apache.org/licenses/LICENSE-2.0)
 
-**Latest Version** 0.4.5 | *Legacy Version* 0.3.1
+**Latest Version** 0.4.6 | *Legacy Version* 0.3.1
+
+## Contributors
+
+A huge thank you for the kind people submitting PRs and continuously improving this plugin (in no particular order).
+If you see yours or anybodys name missing, please submit a PR marking a change in this section.
+
+1. Nigel Gott @nigel-gott
+2. Aldo Borrerro @aldoborrero
+3. Ivan @devshift
+4. Anuraag Agrawal @anuraaga
+5. Davin Kevin @davinkevin
 
 ## What it provides
 
@@ -22,7 +33,7 @@ Similar to the gradle plugin, you can specify multiple jooq configurations and t
 To apply the plugin, use the gradle plugin syntax:
 
     plugins {
-        id("com.rohanprabhu.kotlin-dsl-jooq") version "0.4.5"
+        id("com.rohanprabhu.kotlin-dsl-jooq") version "0.4.6"
     }
 
 If you want to use older versions of jOOQ (i.e. 3.10 and older) use plugin version "0.3.1". Do note that 0.3.1
