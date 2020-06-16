@@ -264,6 +264,8 @@ Optionally, if you want to run the task manually, you can disable this default b
         attachToCompileJava = false
     }
 
+Make sure this is the first line in your `jooqGenerator` block as it only applies to configurations defined after it.
+
 ## Configuring the generator JVM
 
 When the generator runs, it uses a java execution spec that is provided by the gradle infrastructure. If you wish to modify the way it runs, and/or add a handler to the post-execution result, you can:
