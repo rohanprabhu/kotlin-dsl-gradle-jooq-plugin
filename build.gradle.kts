@@ -14,7 +14,7 @@ plugins {
     `java-gradle-plugin`
     `kotlin-dsl`
     `maven-publish`
-    id("com.gradle.plugin-publish") version "0.9.9"
+    id("com.gradle.plugin-publish") version "0.12.0"
 }
 
 group = "com.rohanprabhu"
@@ -36,8 +36,7 @@ pluginBundle {
     tags = listOf("jooq", "kotlin-dsl")
 
     (plugins) {
-        register("kotlinDslJooqPlugin") {
-            id = "com.rohanprabhu.kotlin-dsl-jooq"
+        ("kotlinDslJooqPlugin") {
             displayName = "jOOQ plugin for Kotlin DSL"
         }
     }
