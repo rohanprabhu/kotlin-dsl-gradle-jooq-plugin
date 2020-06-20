@@ -46,7 +46,7 @@ open class JooqCodeGenerationTask : DefaultTask() {
     }
 
     @Input
-    fun getConfigHash() : Int = Objects.deepHashCode(jooqConfiguration.configuration)
+    fun getConfigHash() : Int = jooqConfiguration.configuration.toString().hashCode()
 
     @OutputDirectory
     fun getOutputDirectory() : File =
